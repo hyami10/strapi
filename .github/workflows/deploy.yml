@@ -58,7 +58,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/your_user/strapi_project
+            cd /home/ubuntu/strapi  # Ganti path ini sesuai VPS kamu
             git pull origin develop
             docker compose -f docker-compose.dev.yml down
             docker compose -f docker-compose.dev.yml up -d --build

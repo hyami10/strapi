@@ -8,9 +8,9 @@ services:
     ports:
       - '1337:1337'
     environment:
-      DATABASE_CLIENT: mysql
+      DATABASE_CLIENT: postgres
       DATABASE_NAME: strapi
-      DATABASE_HOST: mysql
+      DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
@@ -18,7 +18,7 @@ services:
     volumes:
       - ./app:/srv/app
     depends_on:
-      - mysql
+      - postgres
 
   postgres:
     image: postgres

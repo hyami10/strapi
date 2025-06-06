@@ -22,7 +22,7 @@ services:
 
   postgres:
     image: postgres
-    restart: always
+    restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:

@@ -4,7 +4,7 @@ services:
   strapi:
     image: strapi/strapi
     container_name: strapi_app
-    restart: always
+    restart: unless-stopped
     ports:
       - '1337:1337'
     environment:
@@ -22,15 +22,16 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgres_db
     restart: unless-stopped
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_USER: strapi
       POSTGRES_PASSWORD: strapi
       POSTGRES_DB: strapi
-    ports:
-      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata:

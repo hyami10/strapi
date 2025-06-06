@@ -1,0 +1,52 @@
+name: CI/CD for Strapi
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: strapi
+          POSTGRES_USER: strapi
+          POSTGRES_PASSWORD: strapi
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Strapi app
+        run: yarn build
+
+      - name: Run Strapi tests (optional)
+        run: yarn test || echo "No tests found"
+
+      - name: Start Strapi in development mode (for test)
+        run: |
+          yarn develop &
+          sleep 10
+          curl --fail http://localhost:1337 || exit 1

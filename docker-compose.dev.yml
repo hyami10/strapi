@@ -1,6 +1,25 @@
 version: '3'
 
 services:
+  strapi:
+    image: strapi/strapi
+    container_name: strapi_app
+    restart: always
+    ports:
+      - '1337:1337'
+    environment:
+      DATABASE_CLIENT: mysql
+      DATABASE_NAME: strapi
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+      NODE_ENV: development
+    volumes:
+      - ./app:/srv/app
+    depends_on:
+      - mysql
+
   postgres:
     image: postgres
     restart: always
@@ -13,20 +32,5 @@ services:
     ports:
       - '5432:5432'
 
-  mysql:
-    image: mysql:8
-    restart: always
-    environment:
-      MYSQL_DATABASE: strapi
-      MYSQL_USER: strapi
-      MYSQL_PASSWORD: strapi
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: strapi
-    volumes:
-      - mysqldata:/var/lib/mysql
-    ports:
-      - '3306:3306'
-
 volumes:
   pgdata:
-  mysqldata:

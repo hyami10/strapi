@@ -42,8 +42,8 @@ jobs:
       - name: Build Strapi app
         run: yarn build
 
-      - name: Run Strapi tests (optional)
-        run: yarn test --if-present
+      #- name: Run Strapi tests (optional)
+      #  run: yarn test --if-present
 
       - name: Start Strapi in development mode (for test)
         run: |

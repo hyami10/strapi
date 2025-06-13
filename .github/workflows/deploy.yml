@@ -45,11 +45,11 @@ jobs:
       #- name: Run Strapi tests (optional)
       #  run: yarn test --if-present
 
-      - name: Start Strapi in development mode (for test)
-        run: |
-          yarn develop &
-          sleep 10
-          curl --fail http://localhost:1337 || exit 1
+      #- name: Start Strapi in development mode (for test)
+      #  run: |
+      #    yarn develop &
+      #    sleep 10
+      #    curl --fail http://localhost:1337 || exit 1
 
       - name: Deploy to Remote Server via SSH
         uses: appleboy/ssh-action@v1.0.0

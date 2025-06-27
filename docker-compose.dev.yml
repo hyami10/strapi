@@ -1,10 +1,11 @@
+version: "3.8"
+
 services:
   strapi:
-    image: strapi/strapi
+    build: .
     container_name: strapi_app
-    restart: unless-stopped
     ports:
-      - '1337:1337'
+      - "1337:1337"
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_NAME: strapi
@@ -12,19 +13,16 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
-      NODE_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
     volumes:
       - ./app:/srv/app
-    depends_on:
-      - postgres
-    command: yarn develop
 
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
     container_name: postgres_db
-    restart: unless-stopped
-    ports:
-      - '5432:5432'
+    restart: always
     environment:
       POSTGRES_USER: strapi
       POSTGRES_PASSWORD: strapi

@@ -6,7 +6,7 @@ RUN corepack enable && corepack prepare yarn@4.5.0 --activate
 WORKDIR /app
 
 # Salin semua file proyek ke dalam container
-COPY . .
+COPY ./app/ .
 
 # Jalankan yarn install setelah semua file tersedia
 RUN yarn install
